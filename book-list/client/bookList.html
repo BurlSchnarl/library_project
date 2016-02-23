@@ -1,65 +1,52 @@
 <template name="bookList">
     {{#if currentUser}}
-    <h3>Here are the library books:</h3>
+    <h3>Here are our library books:</h3>
     <UL>
         {{#each books}}
         <li>
             <i>{{title}}</i> by {{author}}
             <br/>
-            
+
             <!--check if admin-->
             {{#if isAdmin}}
-                <button class="deleteBook" type="button">Delete</button>
-                <br/>
-            {{/if}}
+            <button class="deleteBook" type="button">Delete</button>
+            <br/> {{/if}}
 
             <!--render checkout & checkin buttons-->
             {{#if bookOut}}
-                <span>Checked Out by {{user}}</span>
-                <br/>
-                <span>Due: {{strDateDue}}</span>
-                <br/>
-                {{#if isSameUser}}
-                    <button class="checkIn" type="button">Check In</button>
-                {{/if}}
-            {{else}}
-                <!-- maher changes -->
-                {{#if isMissing}}
-                {{else}}
-                    <button class="checkOut" type="button">Check Out</button>
-                {{/if}}
-                <!-- end maher -->
-                
-                <!-- putnam changes  -->
-                {{#if reserved}}
-                    <p>Reserved by: {{reservationUser}} until: {{reservationDate}}</p>
+            <span>Checked Out by {{user}}</span>
+            <br/>
+            <span>Due: {{strDateDue}}</span>
+            <br/> {{#if isSameUser}}
+            <button class="checkIn" type="button">Check In</button>
+            {{/if}} {{else}}
+            <!-- maher changes -->
+            {{#if isMissing}} {{else}}
+            <button class="checkOut" type="button">Check Out</button>
+            {{/if}}
+            <!-- end maher -->
 
-                {{else}}
-                    <br/>
-                    <label>Reserve</label>
-                    <form class="reservation">
-                        <input type="date" name="date">
-                        <button class="reserve" type="submit">Reserve Book</button>
-                    </form>
-                {{/if}}                
-                <!-- end putnam -->                
-                
-            {{/if}}
-            
-            {{#each comments}}
-                <h4>{{user}}</h4>
-                <h4>rating: {{rating}}/4</h4>
-                <p>Comment: {{text}}</p>
-            {{/each}}
-            
-            {{#if isNotLost}}
+            <!-- putnam changes  -->
+            {{#if reserved}}
+            <p>Reserved by: {{reservationUser}} until: {{reservationDate}}</p>
+
             {{else}}
-                <h3 class="warn">Book has been reported as lost by user "{{user}}"</h3>
+            <br/>
+            <label>Reserve</label>
+            <form class="reservation">
+                <input type="date" name="date">
+                <button class="reserve" type="submit">Reserve Book</button>
+            </form>
             {{/if}}
-            
-            {{#if isMissing}}
-                <h3 class="warn">An administrator has marked this book as missing.</h3>
-            {{/if}}
+            <!-- end putnam -->
+
+            {{/if}} {{#each comments}}
+            <h4>{{user}}</h4>
+            <h4>rating: {{rating}}/4</h4>
+            <p>Comment: {{text}}</p>
+            {{/each}} {{#if isNotLost}} {{else}}
+            <h3 class="warn">Book has been reported as lost by user "{{user}}"</h3> {{/if}} {{#if isMissing}}
+            <h3 class="warn">An administrator has marked this book as missing.</h3> {{/if}}
 
             <form class="bookComment">
                 Rating:
@@ -69,26 +56,18 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                <br/>
-                Comment:
+                <br/> Comment:
                 <input type="text" name="comment">
             </form>
-            {{#if isNotLost}}
-                {{#if isSameUser}}
-                    <button class="reportLost" type="button">I've Lost The Book</button>
-                {{/if}}
-            {{/if}}
-            
-            {{#if isAdmin}}
-                {{#if isMissing}}
-                    <button class="reportFound" type="button">Unmark This Book As Missing</button>
-                {{else}}
-                    <button class="reportMissing" type="button">Mark This Book As Missing</button>
-                {{/if}}
-            {{/if}}
+            {{#if isNotLost}} {{#if isSameUser}}
+            <button class="reportLost" type="button">I've Lost The Book</button>
+            {{/if}} {{/if}} {{#if isAdmin}} {{#if isMissing}}
+            <button class="reportFound" type="button">Unmark This Book As Missing</button>
+            {{else}}
+            <button class="reportMissing" type="button">Mark This Book As Missing</button>
+            {{/if}} {{/if}}
         </li>
-        <hr>
-        {{/each}}
+        <hr> {{/each}}
     </UL>
     {{#if isAdmin}}
     <form class="add-book">
@@ -100,6 +79,5 @@
         <input type="text" name="author">
         <input type="submit" value="Add Book">
     </form>
-    {{/if}} {{else}}
-    <h3>Please log in to see books</h3> {{/if}}
+    {{/if}} {{else}} {{/if}}
 </template>
